@@ -23,8 +23,10 @@ export const contentTypes: ContentTypesInterface = {
 
 export async function getData(contentType: String): Promise<any> {
   const response = await fetch(`${process.env.API_URL}${contentType}`)
-  const data = await response.json()
-  return data
+  if (!response.ok) {
+    throw new Error("Failed to fetch data")
+  }
+  return response.json()
 }
 
 export const connection: ConnectionInterface = {
